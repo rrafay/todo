@@ -1,27 +1,12 @@
 <template>
  
-    
-            <!-- <div >
-                
-            <button class="btn" v-for="post in posts" v-bind:title="post.data" v-bind:key="post.id" 
-            v-bind:style = '{"text-decoration" : (post.isCompleted? "line-through" : "none" )}' 
-            @click="post.isCompleted = !post.isCompleted">
-                
-                {{ post.data }}
-                
-               
-            </button>
-             </div> -->
-            
-       
-
         
         <div class="div">
             
             <div class="inp">
-                <input type="text" v-model="posts.data" placeholder="Type in something">
-                <button  @click="addItem(posts.data)">Add Item</button>
-                <button @click="clearAll(posts.id)">Clear All</button>
+                <input type="text" v-model="newtodo" placeholder="Type in something">
+                <button  @click="addItem(newtodo)">Add Item</button>
+                <button @click="clearAll(newtodo)">Clear All</button>
             </div>
                 
                 <div class="submit" >
@@ -32,7 +17,7 @@
             >
             <input type="checkbox" @click="post.isCompleted = !post.isCompleted"> {{ post.data }}
             
-            <button class="removeBtn" @click="removeItem(k)">x</button>
+            <button id="removeBtn" @click="removeItem(k)">x</button>
             </h1>
                     
                 </div>
@@ -50,7 +35,6 @@ export default {
     data : function(){
         return{
             name : 'Rafay',
-            count : 0,
             posts:[
                 
                 
@@ -60,6 +44,7 @@ export default {
     }
     
 },
+
 methods: {
     addItem(index) {
       this.posts.push({data: index, isCompleted:false});
@@ -70,6 +55,19 @@ methods: {
     },
     removeItem(index){
         this.posts.splice(index, 1);
+       
+    },
+
+},
+mounted(){
+    if(localStorage.getItem('posts')) this.posts = JSON.parse(localStorage.getItem('posts'));
+},
+watch:{
+    posts: {
+        handler(){
+            localStorage.setItem('posts', JSON.stringify(this.posts));
+        },
+        deep: true,
     }
 }
         }
@@ -85,7 +83,7 @@ h1
     background-color: #f2f2f2
     border-bottom: 1px #ccc dotted
       
-.removeBtn
+#removeBtn
     float: right   
     background-color: #ff5050
     border-radius: 15px  
