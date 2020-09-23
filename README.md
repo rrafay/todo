@@ -1,4 +1,5 @@
 # todoapp
+[Go to app](https://silly-einstein-9cc1c0.netlify.app/)
 
 ## Project setup
 ```
